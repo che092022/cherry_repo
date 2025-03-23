@@ -3,68 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple To-Do Listing</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-        }
-        #todo-container {
-            width: 300px;
-            margin: auto;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        li {
-            background: #f4f4f4;
-            margin: 5px 0;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            border-radius: 5px;
-        }
-        button {
-            background: red;
-            color: white;
-            border: none;
-            padding: 5px;
-            cursor: pointer;
-        }
-    </style>
+    <title>Spa & Wellness</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
-    <h2>Simple To-Do List</h2>
-    <div id="todo-container">
-        <input type="text" id="taskInput" placeholder="Enter a task">
-        <button onclick="addTask()">Add Task</button>
-        <ul id="taskList"></ul>
-    </div>
+    <!-- Header & Navigation -->
+    <header>
+        <h1>Spa & Wellness</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#make-appointment">Book Now</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <script>
-        function addTask() {
-            let taskInput = document.getElementById("taskInput");
-            let taskText = taskInput.value.trim();
+    <!-- Homepage Section -->
+    <section id="home">
+        <h2>Relax, Refresh, Rejuvenate</h2>
+        <p>Experience the ultimate relaxation with our world-class spa treatments.</p>
+    </section>
 
-            if (taskText === "") {
-                alert("Please enter a task!");
-                return;
-            }
+    <!-- Services Section -->
+    <section id="services">
+        <h2>Our Services</h2>
+        <div class="services-wrapper">
+            <div class="service">
+                <img src="massage.jpg" alt="Massage Therapy">
+                <div class="service-content">
+                    <h3>Massage Therapy</h3>
+                    <p>Relax your body with our professional massage services.</p>
+                </div>
+            </div>
 
-            let li = document.createElement("li");
-            li.innerHTML = `${taskText} <button onclick="removeTask(this)">Delete</button>`;
+            <div class="service">
+                <img src="facial.jpg" alt="Facial Treatment">
+                <div class="service-content">
+                    <h3>Facial Treatment</h3>
+                    <p>Give your skin the glow it deserves with our facial treatments.</p>
+                </div>
+            </div>
 
-            document.getElementById("taskList").appendChild(li);
-            taskInput.value = ""; // Clear input field
-        }
+            <div class="service">
+                <img src="haircut.jpg" alt="haircut">
+                <div class="service-content">
+                    <h3>haircut</h3>
+                    <p>Detoxify and relax in our state-of-the-art sauna rooms.</p>
+                </div>
+            </div>
 
-        function removeTask(button) {
-            button.parentElement.remove();
-        }
-    </script>
+            <div class="service">
+                <img src="manicure.jpg" alt="Manicure & Pedicure">
+                <div class="service-content">
+                    <h3>Manicure & Pedicure</h3>
+                    <p>Pamper yourself with our luxurious nail care services.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Appointment Booking -->
+<section id="make-appointment">
+    <h2>Book an Appointment</h2>
+    <form id="appointmentForm">
+        <!-- Name Field -->
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" placeholder="Enter your full name" required>
+
+        <!-- Contact Number Field -->
+        <label for="contact">Contact Number:</label>
+        <input type="tel" id="contact" placeholder="Enter your contact number" required pattern="[0-9]{10,13}" title="Please enter a valid phone number (10-13 digits)">
+
+        <!-- Service Selection -->
+        <label for="service">Select Service:</label>
+        <select id="service" required>
+            <option value="">-- Choose a Service --</option>
+            <option value="Massage Therapy">Massage Therapy</option>
+            <option value="Facial Treatment">Facial Treatment</option>
+            <option value="Haircut Therapy">Haircut Therapy</option>
+            <option value="Manicure & Pedicure">Manicure & Pedicure</option>
+        </select>
+
+        <!-- Date Selection -->
+        <label for="appointmentDate">Select Date:</label>
+        <input type="date" id="appointmentDate" required>
+
+        <!-- Time Selection -->
+        <label for="appointmentTime">Select Time:</label>
+        <input type="time" id="appointmentTime" required>
+
+        <!-- Submit Button -->
+        <button type="submit">Book Now</button>
+    </form>
+
+    <!-- Confirmation Message -->
+    <p id="confirmationMessage" style="display:none; font-size:18px; color:#28a745; font-weight:bold;"></p>
+</section>
+
+<script>
+document.getElementById("appointmentForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Get form values
+    let name = document.getElementById("name").value.trim();
+    let contact = document.getElementById("contact").value.trim();
+    let service = document.getElementById("service").value;
+    let date = document.getElementById("appointmentDate").value;
+    let time = document.getElementById("appointmentTime").value;
+    
+    // Basic validation
+    if (name === "" || contact === "" || service === "" || date === "" || time === "") {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    // Ensure selected date is in the future
+    let today = new Date().toISOString().split("T")[0];
+    if (date < today) {
+        alert("Please select a future date for your appointment.");
+        return;
+    }
+
+    // Show confirmation message
+    let confirmationMsg = document.getElementById("confirmationMessage");
+    confirmationMsg.innerHTML = `Thank you, ${name}! Your appointment for <strong>${service}</strong> on <strong>${date}</strong> at <strong>${time}</strong> has been booked. We will contact you at <strong>${contact}</strong> if needed.`;
+    confirmationMsg.style.display = "block";
+
+    // Reset form after submission
+    document.getElementById("appointmentForm").reset();
+});
+</script>
+
 
 </body>
 </html>

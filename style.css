@@ -1,0 +1,188 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #000000;
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+/* Header and Navigation */
+header {
+    background-color: #ff6f61;
+    color: white;
+    padding: 15px;
+    border-radius: 0 0 10px 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Homepage Section */
+#home {
+    background: url('spa.jpg') no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+#home h2 {
+    font-size: 40px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+#home p {
+    font-size: 20px;
+    max-width: 600px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* Services Section */
+#services {
+    background-color: #f5f5f5;
+    padding: 60px 20px;
+    text-align: center;
+    color: black;
+}
+
+#services h2 {
+    color: #ff6f61;
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+/* 2x2 Grid Layout */
+.services-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Service Box */
+.service {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.service:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Bigger Images & Flipping Alternate Images */
+.service img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+/* Flip every second image in each row */
+.service:nth-child(2n) img {
+    transform: scaleX(-1); /* Flips the second image in every row */
+}
+
+/* Service Content */
+.service-content {
+    padding: 20px;
+    color: black;
+}
+
+.service h3 {
+    color: #ff6f61;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.service p {
+    color: #333;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Appointment Section */
+#make-appointment {
+    background: white;
+    padding: 40px;
+    max-width: 500px;
+    margin: 40px auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    text-align: left;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    background-color: #ff6f61;
+    color: white;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #e55b50;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .services-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .service img {
+        height: 250px;
+    }
+
+    .service:nth-child(2n) img {
+        transform: scaleX(1);
+    }
+}
