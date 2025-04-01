@@ -7,6 +7,16 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+    <script>
+        if (localStorage.getItem("isAuthenticated") !== "true") {
+            window.location.href = "login_and_register.html"; // Redirect if not logged in
+
+        }
+        function logout() {
+        localStorage.removeItem("isAuthenticated"); // Remove login status
+        window.location.href = "login_and_register.html"; // Redirect to login page
+    }
+    </script>
 
     <!-- Header & Navigation -->
     <header>
@@ -16,10 +26,12 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#make-appointment">Book Now</a></li>
+                
+
             </ul>
         </nav>
     </header>
-
+    <button onclick="logout()" class="logout-btn">Logout</button>
     <!-- Homepage Section -->
     <section id="home">
         <h2>Relax, Refresh, Rejuvenate</h2>

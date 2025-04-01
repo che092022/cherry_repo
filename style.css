@@ -186,3 +186,31 @@ button:hover {
         transform: scaleX(1);
     }
 }
+.logout-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    padding: 10px 12px; /* Smaller padding */
+    background-color: #d9534f; /* Red shade */
+    color: white;
+    font-size: 12px; /* Smaller font */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.2);
+    width: auto; /* Adjust width based on content */
+    min-width: 80px; /* Set a minimum width */
+    text-align: center;
+}
+
+.logout-btn:hover {
+    background-color: #c9302c; /* Darker red */
+    transform: scale(1.03);
+}
+
+.logout-btn:active {
+    transform: scale(0.95);
+}
+
+
