@@ -3,22 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spa & Wellness</title>
+    <title>Spa  Wellness</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
+    <style>
+        /* Import the Fraktur font */
+        @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+
+        /* Apply Fraktur font styles */
+        body, h1, h2, h3, p, label, button {
+            font-family: 'UnifrakturCook', cursive;
+        }
+
+        /* Keyframes Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.9); opacity: 0; }
+            60% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes fadeInUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Apply Animations */
+        header {
+            animation: slideIn 1s ease-in-out;
+        }
+        
+        .services-wrapper .service {
+            animation: fadeInUp 1s ease-in-out;
+        }
+        
+        #confirmationMessage {
+            animation: popIn 0.5s ease-in-out;
+        }
+
+        .logout-btn {
+            animation: bounceIn 0.6s ease-in-out;
+        }
+
+        h2, h3 {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Font Styles for Sections */
+        #services h2 {
+            font-weight: 700;
+            font-size: 30px;
+        }
+
+        #services h3 {
+            font-weight: 400;
+            font-size: 24px;
+        }
+
+        #services p {
+            font-weight: 300;
+            font-size: 18px;
+        }
+    </style>
 </head>
 <body>
     <script>
         if (localStorage.getItem("isAuthenticated") !== "true") {
-            window.location.href = "login_and_register.html"; // Redirect if not logged in
-
+            window.location.href = "login_and_register.html";
         }
         function logout() {
-        localStorage.removeItem("isAuthenticated"); // Remove login status
-        window.location.href = "login_and_register.html"; // Redirect to login page
-    }
+            localStorage.removeItem("isAuthenticated");
+            window.location.href = "login_and_register.html";
+        }
     </script>
 
-    <!-- Header & Navigation -->
     <header>
         <h1>Spa & Wellness</h1>
         <nav>
@@ -26,128 +98,93 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#make-appointment">Book Now</a></li>
-                
-
             </ul>
         </nav>
     </header>
+    
     <button onclick="logout()" class="logout-btn">Logout</button>
-    <!-- Homepage Section -->
+    
     <section id="home">
         <h2>Relax, Refresh, Rejuvenate</h2>
         <p>Experience the ultimate relaxation with our world-class spa treatments.</p>
     </section>
 
-    <!-- Services Section -->
     <section id="services">
         <h2>Our Services</h2>
         <div class="services-wrapper">
             <div class="service">
                 <img src="massage.jpg" alt="Massage Therapy">
                 <div class="service-content">
-                    <h3>Massage Therapy</h3>
+                    <h3>Massage Therapy - ₱500.00</h3>
                     <p>Relax your body with our professional massage services.</p>
                 </div>
             </div>
-
             <div class="service">
                 <img src="facial.jpg" alt="Facial Treatment">
                 <div class="service-content">
-                    <h3>Facial Treatment</h3>
+                    <h3>Facial Treatment - ₱1000.00</h3>
                     <p>Give your skin the glow it deserves with our facial treatments.</p>
                 </div>
             </div>
-
             <div class="service">
-                <img src="haircut.jpg" alt="haircut">
+                <img src="haircut.jpg" alt="Haircut">
                 <div class="service-content">
-                    <h3>haircut</h3>
-                    <p>Detoxify and relax in our state-of-the-art sauna rooms.</p>
+                    <h3>Haircut - ₱100.00</h3>
+                    <p>Relax and rejuvenate with a stylish haircut.</p>
                 </div>
             </div>
-
             <div class="service">
                 <img src="manicure.jpg" alt="Manicure & Pedicure">
                 <div class="service-content">
-                    <h3>Manicure & Pedicure</h3>
+                    <h3>Manicure & Pedicure - ₱100.00</h3>
                     <p>Pamper yourself with our luxurious nail care services.</p>
                 </div>
             </div>
         </div>
     </section>
 
-   <!-- Appointment Booking -->
-<section id="make-appointment">
-    <h2>Book an Appointment</h2>
-    <form id="appointmentForm">
-        <!-- Name Field -->
-        <label for="name">Full Name:</label>
-        <input type="text" id="name" placeholder="Enter your full name" required>
+    <section id="make-appointment">
+        <h2>Book an Appointment</h2>
+        <form id="appointmentForm">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" placeholder="Enter your full name" required>
+            <label for="contact">Contact Number:</label>
+            <input type="tel" id="contact" placeholder="Enter your contact number" required pattern="[0-9]{10,13}" title="Please enter a valid phone number (10-13 digits)">
+            <label for="service">Select Service:</label>
+            <select id="service" required>
+                <option value="">-- Choose a Service --</option>
+                <option value="Massage Therapy">Massage Therapy</option>
+                <option value="Facial Treatment">Facial Treatment</option>
+                <option value="Haircut">Haircut</option>
+                <option value="Manicure & Pedicure">Manicure & Pedicure</option>
+            </select>
+            <label for="appointmentDate">Select Date:</label>
+            <input type="date" id="appointmentDate" required>
+            <label for="appointmentTime">Select Time:</label>
+            <input type="time" id="appointmentTime" required>
+            <button type="submit">Book Now</button>
+        </form>
+        <p id="confirmationMessage" style="display:none; font-size:18px; color:#28a745; font-weight:bold;"></p>
+    </section>
 
-        <!-- Contact Number Field -->
-        <label for="contact">Contact Number:</label>
-        <input type="tel" id="contact" placeholder="Enter your contact number" required pattern="[0-9]{10,13}" title="Please enter a valid phone number (10-13 digits)">
-
-        <!-- Service Selection -->
-        <label for="service">Select Service:</label>
-        <select id="service" required>
-            <option value="">-- Choose a Service --</option>
-            <option value="Massage Therapy">Massage Therapy</option>
-            <option value="Facial Treatment">Facial Treatment</option>
-            <option value="Haircut Therapy">Haircut Therapy</option>
-            <option value="Manicure & Pedicure">Manicure & Pedicure</option>
-        </select>
-
-        <!-- Date Selection -->
-        <label for="appointmentDate">Select Date:</label>
-        <input type="date" id="appointmentDate" required>
-
-        <!-- Time Selection -->
-        <label for="appointmentTime">Select Time:</label>
-        <input type="time" id="appointmentTime" required>
-
-        <!-- Submit Button -->
-        <button type="submit">Book Now</button>
-    </form>
-
-    <!-- Confirmation Message -->
-    <p id="confirmationMessage" style="display:none; font-size:18px; color:#28a745; font-weight:bold;"></p>
-</section>
-
-<script>
-document.getElementById("appointmentForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevent default form submission
-
-    // Get form values
-    let name = document.getElementById("name").value.trim();
-    let contact = document.getElementById("contact").value.trim();
-    let service = document.getElementById("service").value;
-    let date = document.getElementById("appointmentDate").value;
-    let time = document.getElementById("appointmentTime").value;
-    
-    // Basic validation
-    if (name === "" || contact === "" || service === "" || date === "" || time === "") {
-        alert("Please fill in all fields.");
-        return;
-    }
-
-    // Ensure selected date is in the future
-    let today = new Date().toISOString().split("T")[0];
-    if (date < today) {
-        alert("Please select a future date for your appointment.");
-        return;
-    }
-
-    // Show confirmation message
-    let confirmationMsg = document.getElementById("confirmationMessage");
-    confirmationMsg.innerHTML = `Thank you, ${name}! Your appointment for <strong>${service}</strong> on <strong>${date}</strong> at <strong>${time}</strong> has been booked. We will contact you at <strong>${contact}</strong> if needed.`;
-    confirmationMsg.style.display = "block";
-
-    // Reset form after submission
-    document.getElementById("appointmentForm").reset();
-});
-</script>
-
-
+    <script>
+    document.getElementById("appointmentForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        let name = document.getElementById("name").value.trim();
+        let contact = document.getElementById("contact").value.trim();
+        let service = document.getElementById("service").value;
+        let date = document.getElementById("appointmentDate").value;
+        let time = document.getElementById("appointmentTime").value;
+        let today = new Date().toISOString().split("T")[0];
+        if (date < today) {
+            alert("Please select a future date for your appointment.");
+            return;
+        }
+        let confirmationMsg = document.getElementById("confirmationMessage");
+        confirmationMsg.innerHTML = `Thank you, ${name}! Your appointment for <strong>${service}</strong> on <strong>${date}</strong> at <strong>${time}</strong> has been booked. We will contact you at <strong>${contact}</strong> if needed.`;
+        confirmationMsg.style.display = "block";
+        document.getElementById("appointmentForm").reset();
+    });
+    </script>
 </body>
 </html>
