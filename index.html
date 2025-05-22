@@ -64,7 +64,7 @@
         }
 
         /* Font Styles for Sections */
-        #services h2 {
+        #services h2, #dashboard h2, #make-appointment h2 {
             font-weight: 700;
             font-size: 30px;
         }
@@ -78,6 +78,54 @@
             font-weight: 300;
             font-size: 18px;
         }
+
+        /* Dashboard Styles */
+        #dashboard {
+            padding: 40px 20px;
+            background-color: #8b12fb;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .dashboard-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .user-info, .appointments {
+            flex: 1;
+            min-width: 300px;
+            background: rgb(207, 20, 227);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .appointment-item {
+            border-bottom: 1px solid #000000;
+            padding: 10px 0;
+        }
+
+        .appointment-item:last-child {
+            border-bottom: none;
+        }
+
+        .appointment-item p {
+            margin: 5px 0;
+        }
+
+        .no-appointments {
+            font-style: italic;
+            color: #666;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
@@ -85,10 +133,79 @@
         if (localStorage.getItem("isAuthenticated") !== "true") {
             window.location.href = "login_and_register.html";
         }
+        
+        // Sample user data - in a real app, this would come from a database
+        const userData = {
+            name: "John Doe",
+            email: "john.doe@example.com",
+            membership: "Gold Member",
+            joinDate: "January 15, 2023"
+        };
+
+        // Sample appointment data
+        let appointments = [
+            {
+                service: "Massage Therapy",
+                date: "2023-06-15",
+                time: "14:00",
+                status: "Completed"
+            },
+            {
+                service: "Facial Treatment",
+                date: "2023-07-20",
+                time: "11:00",
+                status: "Upcoming"
+            }
+        ];
+
         function logout() {
             localStorage.removeItem("isAuthenticated");
             window.location.href = "login_and_register.html";
         }
+
+        function saveAppointment(service, date, time) {
+            const newAppointment = {
+                service: service,
+                date: date,
+                time: time,
+                status: "Upcoming"
+            };
+            appointments.push(newAppointment);
+            updateAppointmentsDisplay();
+        }
+
+        function updateAppointmentsDisplay() {
+            const appointmentsContainer = document.querySelector('.appointments-list');
+            if (appointments.length === 0) {
+                appointmentsContainer.innerHTML = '<p class="no-appointments">You have no upcoming appointments.</p>';
+                return;
+            }
+
+            appointmentsContainer.innerHTML = '';
+            appointments.forEach(appt => {
+                const apptItem = document.createElement('div');
+                apptItem.className = 'appointment-item';
+                apptItem.innerHTML = `
+                    <p><strong>Service:</strong> ${appt.service}</p>
+                    <p><strong>Date:</strong> ${appt.date}</p>
+                    <p><strong>Time:</strong> ${appt.time}</p>
+                    <p><strong>Status:</strong> <span class="status-${appt.status.toLowerCase()}">${appt.status}</span></p>
+                `;
+                appointmentsContainer.appendChild(apptItem);
+            });
+        }
+
+        // Initialize dashboard when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set user info
+            document.getElementById('user-name').textContent = userData.name;
+            document.getElementById('user-email').textContent = userData.email;
+            document.getElementById('user-membership').textContent = userData.membership;
+            document.getElementById('user-join-date').textContent = userData.joinDate;
+
+            // Display appointments
+            updateAppointmentsDisplay();
+        });
     </script>
 
     <header>
@@ -96,6 +213,7 @@
         <nav>
             <ul>
                 <li><a href="#home">Home</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#make-appointment">Book Now</a></li>
             </ul>
@@ -107,6 +225,25 @@
     <section id="home">
         <h2>Relax, Refresh, Rejuvenate</h2>
         <p>Experience the ultimate relaxation with our world-class spa treatments.</p>
+    </section>
+
+    <section id="dashboard">
+        <h2>Your Dashboard</h2>
+        <div class="dashboard-container">
+            <div class="user-info">
+                <h3>User Information</h3>
+                <p><strong>Name:</strong> <span id="user-name"></span></p>
+                <p><strong>Email:</strong> <span id="user-email"></span></p>
+                <p><strong>Membership:</strong> <span id="user-membership"></span></p>
+                <p><strong>Member Since:</strong> <span id="user-join-date"></span></p>
+            </div>
+            <div class="appointments">
+                <h3>Your Appointments</h3>
+                <div class="appointments-list">
+                    <!-- Appointments will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
     </section>
 
     <section id="services">
@@ -176,14 +313,37 @@
         let date = document.getElementById("appointmentDate").value;
         let time = document.getElementById("appointmentTime").value;
         let today = new Date().toISOString().split("T")[0];
+        
         if (date < today) {
             alert("Please select a future date for your appointment.");
             return;
         }
+        
         let confirmationMsg = document.getElementById("confirmationMessage");
         confirmationMsg.innerHTML = `Thank you, ${name}! Your appointment for <strong>${service}</strong> on <strong>${date}</strong> at <strong>${time}</strong> has been booked. We will contact you at <strong>${contact}</strong> if needed.`;
         confirmationMsg.style.display = "block";
+        
+        // Save the new appointment to the dashboard
+        saveAppointment(service, date, time);
+        
         document.getElementById("appointmentForm").reset();
+    });
+
+    // Add status styling
+    document.addEventListener('DOMContentLoaded', function() {
+        const style = document.createElement('style');
+        style.textContent = `
+            .status-completed {
+                color: #000000;
+            }
+            .status-upcoming {
+                color: #000000;
+            }
+            .status-cancelled {
+                color: #000000;
+            }
+        `;
+        document.head.appendChild(style);
     });
     </script>
 </body>
